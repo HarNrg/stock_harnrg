@@ -1,16 +1,26 @@
 from flask import Flask
 
-from src.business_logic.process_query import create_business_logic
+from stock_prj.business_logic.process_query import create_business_logic
+#from stock_prj. import init_method
+#from src.business_logic.process_query import create_business_logic
 
 app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
 def hello():
-    return f'Hello friend dear Isaque, you should use a better route:!\nEX: get_stock_val/<ticker>\n'
+    return f'Hello dear Isaque, you should use a better route:!\nEX: get_stock_val/<ticker>\n'
 
-
+'''
 @app.route('/get_stock_val/<ticker>', methods=['GET'])
+def get_stock_value(ticker):
+    bl = create_business_logic()
+    prediction = bl.do_predictions_for(ticker)
+
+    return f'{prediction}\n'
+'''
+
+@app.route('/stock_proj/<ticker>', methods=['GET'])
 def get_stock_value(ticker):
     bl = create_business_logic()
     prediction = bl.do_predictions_for(ticker)
