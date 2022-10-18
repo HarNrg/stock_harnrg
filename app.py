@@ -20,7 +20,7 @@ def get_stock_value(ticker):
     return f'{prediction}\n'
 '''
 
-@app.route('/stock_proj/<ticker>', methods=['GET'])
+@app.route('/stock_prj/<ticker>', methods=['GET'])
 def get_stock_value(ticker):
     bl = create_business_logic()
     prediction = bl.do_predictions_for(ticker)

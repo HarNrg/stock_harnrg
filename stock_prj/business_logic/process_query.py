@@ -17,7 +17,7 @@ def create_business_logic():
 class BusinessLogic:
 
     def __init__(self, model_creator):
-        self._root_bucket = 'model_bucket_ycng_228'
+        self._root_bucket = 'model_bucket_hnnu_ycng228'
         self._config = configparser.ConfigParser()
         self._config.read('application.conf')
         self._model_creator = model_creator
@@ -31,7 +31,9 @@ class BusinessLogic:
 
     def _get_or_create_model(self, ticker):
         log = logging.getLogger()
-        model_filename = self.get_model_filename_from_ticker(ticker)	
+        model_filename = self.get_model_filename_from_ticker(ticker)
+        model = get_model_from_bucket(model_filename, self.get_bucket_name())
+                	
         '''
 	####################-For local implementation only-########
         model = None        
@@ -42,10 +44,10 @@ class BusinessLogic:
                 model = joblib.load(file_obj)
         except FileNotFoundError:
             log.warning(f'model {model_filename} not found\n')
-        model = self._model_creator.fit(ticker)                           
+        model = self._model_creator.fit(ticker) 
+        #model = None                           
         ########################### 
         '''       
-        model = None #get_model_from_bucket(model_filename, self.get_bucket_name())
         
         if model is None:
             log.warning(f'training model for {ticker}')
@@ -55,8 +57,9 @@ class BusinessLogic:
             upload_file_to_bucket(model_filename, self.get_bucket_name())
         return model
 
+
     def get_model_filename_from_ticker(self, ticker):
-        return f'./stock_prj/data/{ticker}.pkl'
+        return f'{ticker}.pkl'
 
     def _create_bucket(self):
         create_bucket(self.get_bucket_name())
