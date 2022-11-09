@@ -1,8 +1,8 @@
 from flask import Flask
 
-from stock_prj.business_logic.process_query import create_business_logic
-#from stock_prj. import init_method
+#from stock_prj.business_logic.process_query import create_business_logic
 #from src.business_logic.process_query import create_business_logic
+from stock_prj.start import create_business_logic
 
 app = Flask(__name__)
 
@@ -22,9 +22,8 @@ def get_stock_value(ticker):
 
 @app.route('/stock_prj/<ticker>', methods=['GET'])
 def get_stock_value(ticker):
-    bl = create_business_logic()
-    prediction = bl.do_predictions_for(ticker)
 
+    prediction = create_business_logic(ticker)
     return f'{prediction}\n'
 
 

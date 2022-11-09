@@ -44,7 +44,6 @@ def get_model_from_bucket(model_filename, bucket_name):
     blob = storage.Blob(f'{model_filename}', b)
     try:
         with open(f'{model_filename}', 'wb') as file_obj:  # critical resource should use tempfile...
-
             client.download_blob_to_file(blob, file_obj)
         with open(f'{model_filename}', 'rb') as file_obj:
             model = joblib.load(file_obj)
@@ -53,3 +52,5 @@ def get_model_from_bucket(model_filename, bucket_name):
         model = None
 
     return model
+
+
